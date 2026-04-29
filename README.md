@@ -40,3 +40,5 @@ Final Devlog goes here.
 [SİMPLE GAME UI PACK](https://enogcestudio.itch.io/ui-pack-pxel-default-bold-vs)
 
 [winterflowers-font](https://nest.itch.io/winterflowers-font)
+
+[Heart pixelart asset](https://itch.io/search?q=Heart+asset)
