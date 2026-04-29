@@ -41,4 +41,4 @@ Final Devlog goes here.
 
 [winterflowers-font](https://nest.itch.io/winterflowers-font)
 
-[Heart pixelart asset](https://itch.io/search?q=Heart+asset)
+[Heart pixelart asset]([https://itch.io/search?q=Heart+asset](https://rollinrock.itch.io/hearts-pixelart-assets))
