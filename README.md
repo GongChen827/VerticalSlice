@@ -13,7 +13,23 @@ It is also related to the other systems because it will control whether the Ligh
 
 
 ## Milestone 2 Devlog
-Milestone 2 Devlog goes here.
+1. For this Milestone, I will do my best to build the complicating gameplay feature, which is that the player can use the power-up that they will get during the gameplay to remove dark barriers that show in the latter part of the level and defeat a final enemy at the end. So basically, after I am done with this milestone, the player can first collect the shrine power-up, then use the new ability in order to progress through some blocked path, and finally uses the that ability for defeating the final enemy.
+
+   1. **Make the dark barrier respond to the light burst.**
+      1. First, I will create a dark barrier object or tilemap section after the shrine area, so the player can clearly see that the path is blocked. And then I will run the game and confirm that the player cannot walk through the barrier.
+      2. Next, I will create a script for the dark barrier that can remove the barrier. Then I will test to confirm that the barrier disappears.
+      3. Then I will connect the player’s existing light burst ability graph to the C# method, so pressing E after collecting the power-up can remove the barrier, after doing that, I will try to collect the power-up in the game, and press E near the barrier, and test whether or not that the barrier disappears after using the ability.
+         
+   2. **Build the final enemy with movement and contact damage.**
+      1. For the final enemy, I can begin by putting a final enemy in the last area of the level and giving it a collider.
+      2. Next, I can add a simple enemy movement script, such as pacing left and right between two single points in the last area. And then I can see by playing the game and making sure that the enemy moves back and forth.
+      3. Then I can make the enemy damage the player on contact by calling the player’s health script. And I will walk into the enemy and check that the player loses one heart.
+      
+   3. **Make the final enemy only take damage from the light burst and open the exit after defeat.**
+      1. I can add health to the enemy, such as 3 hits per death, and then test it by using Debug Log to print the enemy’s current health whenever it is hit.
+      2. And then I can make the light burst detect the enemy and call the enemy’s damage method. For playtesting, I will press E near the enemy and use my ability and check that the enemy loses health.
+      3. Then I can add enemy hit feedback, for example, a red flash when the enemy is damaged and a death animation or disappearance when health reaches 0 just like the player's character. And I will hit the enemy until it dies and make sure that it is able to disappears.
+      4. After all is done, I also want to add a short UI message that says something like "The final exit is opened!" and unlock the final exit. And for testing this, I can defeat the enemy in the game and try to see whether or not that message appears and the exit is no longer blocked. 
 
 ## Milestone 3 Devlog
 Milestone 3 Devlog goes here.
