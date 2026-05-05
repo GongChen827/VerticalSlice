@@ -128488,7 +128488,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.14, y: 0.75, z: -10}
+  m_LocalPosition: {x: 1.1400001, y: 0.75, z: -10}
   m_LocalScale: {x: 1, y: 0.6666667, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -140484,6 +140484,9 @@ GameObject:
   - component: {fileID: 1955173178}
   - component: {fileID: 1955173180}
   - component: {fileID: 1955173181}
+  - component: {fileID: 1955173182}
+  - component: {fileID: 1955173183}
+  - component: {fileID: 1955173184}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -140628,9 +140631,9 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 519420032}
   - {fileID: 1306117196}
   - {fileID: 2064072310}
+  - {fileID: 519420032}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1955173177
@@ -140736,7 +140739,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 7
-  invincibilityDuration: 0.4
+  invincibilityDuration: 0.3
   deathY: -10
   heartImages:
   - {fileID: 1831268132}
@@ -140752,6 +140755,60 @@ MonoBehaviour:
   bodyRenderer: {fileID: 1955173175}
   hurtFlashColor: {r: 1, g: 0, b: 0, a: 1}
   hurtFlashDuration: 0.12
+  playerAnimator: {fileID: 1955173182}
+  dieTriggerName: Die
+  isDeadBoolName: IsDead
+  deathPanelDelay: 1
+--- !u!95 &1955173182
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955173172}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c396da031a6584fbfb6e963d1daa1f1e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1955173183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955173172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11f1c1ebea9e640698b4ac912de815bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerAnimator: {fileID: 1955173182}
+--- !u!114 &1955173184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955173172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d44b78330c764b5dac363b51f25199d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerAnimator: {fileID: 1955173182}
+  attackStateName: Attack
+  isAttackingBoolName: IsAttacking
+  resetAtNormalizedTime: 0.4
 --- !u!1 &1957637925
 GameObject:
   m_ObjectHideFlags: 0
@@ -141315,6 +141372,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2064072310}
   - component: {fileID: 2064072311}
+  - component: {fileID: 2064072312}
   m_Layer: 0
   m_Name: PlayerGlow
   m_TagString: Untagged
@@ -141389,6 +141447,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2064072312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064072309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb8d8804ae7264a08b2f439435188a12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourceRenderer: {fileID: 1955173175}
+  glowRenderer: {fileID: 2064072311}
+  glowColor: {r: 0.011764706, g: 1, b: 0.84313726, a: 0.55}
 --- !u!1 &2064555127
 GameObject:
   m_ObjectHideFlags: 0

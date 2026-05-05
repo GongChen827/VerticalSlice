@@ -23,6 +23,12 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private Color hurtFlashColor = Color.red;
     [SerializeField] private float hurtFlashDuration = 0.12f;
 
+    [Header("Animation")]
+    [SerializeField] private Animator playerAnimator;
+    [SerializeField] private string dieTriggerName = "Die";
+    [SerializeField] private string isDeadBoolName = "IsDead";
+    [SerializeField] private float deathPanelDelay = 1.5f;
+
     private int currentHealth;
     private bool canTakeDamage = true;
     private bool isDead = false;
@@ -31,14 +37,26 @@ public class PlayerHealth : MonoBehaviour
     private Rigidbody2D rb;
     private Coroutine flashRoutine;
 
+    private float originalGravityScale;
+
     private void Awake()
     {
         scriptMachine = GetComponent<ScriptMachine>();
         rb = GetComponent<Rigidbody2D>();
 
+        if (rb != null)
+        {
+            originalGravityScale = rb.gravityScale;
+        }
+
         if (bodyRenderer == null)
         {
             bodyRenderer = GetComponent<SpriteRenderer>();
+        }
+
+        if (playerAnimator == null)
+        {
+            playerAnimator = GetComponent<Animator>();
         }
     }
 
@@ -50,6 +68,12 @@ public class PlayerHealth : MonoBehaviour
         if (deathPanel != null)
         {
             deathPanel.SetActive(false);
+        }
+
+        if (playerAnimator != null)
+        {
+            playerAnimator.speed = 1f;
+            playerAnimator.SetBool(isDeadBoolName, false);
         }
     }
 
@@ -138,6 +162,7 @@ public class PlayerHealth : MonoBehaviour
     {
         Color originalColor = bodyRenderer.color;
         bodyRenderer.color = hurtFlashColor;
+
         yield return new WaitForSeconds(hurtFlashDuration);
 
         if (!isDead && bodyRenderer != null)
@@ -148,20 +173,47 @@ public class PlayerHealth : MonoBehaviour
 
     private void Die()
     {
+        if (isDead) return;
+
         isDead = true;
         canTakeDamage = false;
+
+        StartCoroutine(DeathRoutine());
+    }
+
+    private IEnumerator DeathRoutine()
+    {
+        if (flashRoutine != null)
+        {
+            StopCoroutine(flashRoutine);
+        }
+
+        if (playerAnimator != null)
+        {
+            playerAnimator.speed = 1f;
+
+            playerAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
+
+            playerAnimator.SetBool(isDeadBoolName, true);
+
+            playerAnimator.ResetTrigger(dieTriggerName);
+            playerAnimator.SetTrigger(dieTriggerName);
+        }
+
 
         if (rb != null)
         {
             rb.velocity = Vector2.zero;
             rb.angularVelocity = 0f;
-            rb.simulated = false;
+            rb.gravityScale = 0f;
         }
 
         if (scriptMachine != null)
         {
             scriptMachine.enabled = false;
         }
+
+        yield return new WaitForSecondsRealtime(deathPanelDelay);
 
         if (deathPanel != null)
         {
