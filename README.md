@@ -41,6 +41,8 @@ It is also related to the other systems because it will control whether the Ligh
 
 ![My Player Ability Graph](https://github.com/user-attachments/assets/2038453b-d0ab-4c20-8708-bdaab81246f6)
 
+4. I finished both my Tilemap and Animator systems for this milestone. And I use the Tilemap system for the platforms, hazards, and also the dark barriers, while the Animator system is used on the Player and FinalEnemy's movement, attack, hit, and also death animations. 
+
 ## Milestone 3 Devlog
 Milestone 3 Devlog goes here.
 
