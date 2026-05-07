@@ -39,8 +39,7 @@ It is also related to the other systems because it will control whether the Ligh
 
    I really think that this bridge helped me keep my game architecture much more organized. I can use Visual Scripting for the input, cooldown, particles, and also animation timing, which is really easier than doing in code, and I can see the logic flow clearly. On the other hand, C# is cleaner for the hit detection and the object interaction, for LightBurstHitDetector.cs I added, the method can check a circle-shaped range around the player, and if it finds a DarkBarrier with **DarkBarrier.cs** added, then it will call OpenBarrier() so that the barriers can disappear (inactive). And if it finds a FinalEnemy that has **FinalEnemy.cs** added, then it will call TakeLightDamage(), which can damage the enemy and make it flash red, and finally die after enough hits. 
 
-![My Player Ability Graph](<img width="829" height="519" alt="截屏2026-05-06 下午6 11 16" src="https://github.com/user-attachments/assets/5940f650-56d8-4062-9784-7946bd2c9138" />
-)
+![My Player Ability Graph](https://github.com/user-attachments/assets/2038453b-d0ab-4c20-8708-bdaab81246f6)
 
 ## Milestone 3 Devlog
 Milestone 3 Devlog goes here.
