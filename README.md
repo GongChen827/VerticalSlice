@@ -44,7 +44,18 @@ It is also related to the other systems because it will control whether the Ligh
 4. I finished both my Tilemap and Animator systems for this milestone. And I use the Tilemap system for the platforms, hazards, and also the dark barriers, while the Animator system is used on the Player and FinalEnemy's movement, attack, hit, and also death animations. 
 
 ## Milestone 3 Devlog
-Milestone 3 Devlog goes here.
+1. For this Milestone, I mainly created two Shader Graph effects, which are used for my player's light ability. For the first one, it is named SG_LightBurstGlow and used on the LightBurstShaderVisual object, which can be found under the Player (SG_LightBurstGlow can also be found in my project assets, which is Assets - Shaders - ShaderGraphs). This shader will create a kind of light-blue transparent glow around the player when the ability is used by pressing the E key, which I intentionally want it to look like the player is collecting the energy before releasing the attack. It uses the UV coordinates, and then subtracts the center point, which is (0.5, 0.5), and uses the nodes such as Length, One Minus, and also the saturate to create a kind of circular glow mask. This mask is multiplied by the glow color for the Base Color, and then its alpha will be controlled by the EffectAlpha property I added, so that the C# scripts can fade the effect in and out. 
+
+   My second shader is SG_SwordQiArc, which can also be found in the same asset folder as the first one. It is used by Mat_SwordQiArc on the SwordQiSlashVisual object under the Player, and this is the main light slash effect that will appear when the player presses E after collecting the power-up. For this shader graph, I also use the UV coordinates, but different than the first one, it creates a crescent shape by using two soft circular masks with the nodes such as Length, Smoothstep, One Minus, Subtract, and also Saturate. And the graph basically is subtracting the inner circle from the outer circle in order to make an arc shape, then multiplying that mask with the SlashColor for the Base Color and EffectAlpha for the Alpha. I also think it is better to set the shader to Transparent, Additive blending, and also make the Render Face to Both, so it will look bright and energy-style and still appear when the player faces either direction. And this effect will be activated from the previous ability, Visual Scripting Graph I made, which is by calling PlaySwordQiSlash() from SwordQiSlashVFX.cs.
+
+Screenshot for both graphs: 
+![SG_LightBurstGlow](https://github.com/user-attachments/assets/c3cd40e1-6d7a-48b5-b928-91a214766be1)
+
+![SG_SwordQiArc](https://github.com/user-attachments/assets/8277e29a-1e5b-40f5-9c2d-9cbbfe96bf47)
+
+2. After the last Milestone, I changed my final enemy fight again based on the playtest feedback, because the players said it was too easy for them to defeat the final enemy, and it ended too quickly and felt boring. So I adjusted the final enemy's health and its movement speed, so that the player has to land more light burst hits in order to defeat it. I also added more danger to the final arena, which includes the hazards and some extra platforms, so instead of standing still there on the platforms and keeping attacking the final enemy, I want the player to have to dodge the hazards, move around the arena, and wait for the ability cooldown. And after testing it, I think now the final fight feels much harder than before, but also feels balanced enough to be completed, even for someone new to the game.
+
+3. Since Milestone 2, I added more content before the final fight with the final enemy, so that the main gameplay loop now feels more complete and fun. First, I added some more of the dark barriers, then I also added two smaller shadow enemies that can be defeated after landing two ability attacks. Now, the player has to use the power-up ability multiple times across the whole level, instead of just using it one to two times, and I think this will give the player more practice with the power-up before the final fight and make the level feel longer and more complete. I also added a final arena trigger (used for the health bar, and can also be used for later second sound track) and a large final enemy health bar at the top of the screen, so when the player enters the final arena (triggers the final arena trigger), the boss health bar appears as full red, and will lose red sections when the enemy takes damage from the player, and will disappear after the final enemy is defeated. 
 
 ## Milestone 4 Devlog
 Milestone 4 Devlog goes here.
@@ -70,3 +81,5 @@ Final Devlog goes here.
 [winterflowers-font](https://nest.itch.io/winterflowers-font)
 
 [Heart pixelart asset](https://rollinrock.itch.io/hearts-pixelart-assets)
+
+[Health Bar](https://wolf-viciox.itch.io/health-bar)
