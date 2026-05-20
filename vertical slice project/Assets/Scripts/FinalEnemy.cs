@@ -4,12 +4,12 @@ using UnityEngine;
 public class FinalEnemy : MonoBehaviour
 {
     [Header("Health")]
-    [SerializeField] private int maxHealth = 3;
+    [SerializeField] private int maxHealth = 5;
 
     [Header("Movement")]
     [SerializeField] private Transform leftPoint;
     [SerializeField] private Transform rightPoint;
-    [SerializeField] private float moveSpeed = 2f;
+    [SerializeField] private float moveSpeed = 3f;
 
     [Header("Damage")]
     [SerializeField] private int contactDamage = 1;
@@ -29,10 +29,17 @@ public class FinalEnemy : MonoBehaviour
     [SerializeField] private ExitController exitController;
     [SerializeField] private float disappearDelay = 0.8f;
 
+    [Header("Boss Health UI")]
+    [SerializeField] private BossHealthBarUI bossHealthBarUI;
+
     private int currentHealth;
     private bool isDead = false;
     private Transform currentTarget;
     private Color originalColor;
+
+    public int CurrentHealth => currentHealth;
+    public int MaxHealth => maxHealth;
+    public bool IsDead => isDead;
 
     private void Awake()
     {
@@ -57,6 +64,11 @@ public class FinalEnemy : MonoBehaviour
     private void Start()
     {
         currentTarget = rightPoint;
+
+        if (bossHealthBarUI != null)
+        {
+            bossHealthBarUI.SetHealth(currentHealth, maxHealth);
+        }
     }
 
     private void Update()
@@ -124,7 +136,9 @@ public class FinalEnemy : MonoBehaviour
     {
         if (isDead) return;
 
-        PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+        PlayerHealth playerHealth =
+            other.GetComponent<PlayerHealth>() ??
+            other.GetComponentInParent<PlayerHealth>();
 
         if (playerHealth != null)
         {
@@ -136,11 +150,23 @@ public class FinalEnemy : MonoBehaviour
     {
         if (isDead) return;
 
-        PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+        PlayerHealth playerHealth =
+            other.GetComponent<PlayerHealth>() ??
+            other.GetComponentInParent<PlayerHealth>();
 
         if (playerHealth != null)
         {
             playerHealth.TakeDamage(contactDamage);
+        }
+    }
+
+    public void SetBossHealthBar(BossHealthBarUI healthBar)
+    {
+        bossHealthBarUI = healthBar;
+
+        if (bossHealthBarUI != null)
+        {
+            bossHealthBarUI.SetHealth(currentHealth, maxHealth);
         }
     }
 
@@ -150,11 +176,21 @@ public class FinalEnemy : MonoBehaviour
 
         currentHealth -= damage;
 
+        if (currentHealth < 0)
+        {
+            currentHealth = 0;
+        }
+
         Debug.Log("Final Enemy hit. Current health: " + currentHealth);
+
+        if (bossHealthBarUI != null)
+        {
+            bossHealthBarUI.SetHealth(currentHealth, maxHealth);
+        }
 
         StartCoroutine(HitFlashRoutine());
 
-        if (enemyAnimator != null)
+        if (enemyAnimator != null && currentHealth > 0)
         {
             enemyAnimator.SetTrigger(hitTrigger);
         }
@@ -187,6 +223,11 @@ public class FinalEnemy : MonoBehaviour
 
         Debug.Log("Final Enemy defeated.");
 
+        if (bossHealthBarUI != null)
+        {
+            bossHealthBarUI.SetHealth(0, maxHealth);
+        }
+
         if (enemyAnimator != null)
         {
             enemyAnimator.SetTrigger(dieTrigger);
@@ -203,6 +244,11 @@ public class FinalEnemy : MonoBehaviour
     private IEnumerator DisappearAfterDelay()
     {
         yield return new WaitForSeconds(disappearDelay);
+
+        if (bossHealthBarUI != null)
+        {
+            bossHealthBarUI.Hide();
+        }
 
         gameObject.SetActive(false);
     }
