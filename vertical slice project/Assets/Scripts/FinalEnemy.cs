@@ -183,6 +183,11 @@ public class FinalEnemy : MonoBehaviour
 
         Debug.Log("Final Enemy hit. Current health: " + currentHealth);
 
+        if (GameAudioManager.Instance != null)
+        {
+            GameAudioManager.Instance.PlayEnemyHitSFX();
+        }
+
         if (bossHealthBarUI != null)
         {
             bossHealthBarUI.SetHealth(currentHealth, maxHealth);
@@ -222,6 +227,12 @@ public class FinalEnemy : MonoBehaviour
         isDead = true;
 
         Debug.Log("Final Enemy defeated.");
+
+        if (GameAudioManager.Instance != null)
+        {
+            GameAudioManager.Instance.PlayEnemyDeathSFX();
+            GameAudioManager.Instance.PlayExplorationMusic();
+        }
 
         if (bossHealthBarUI != null)
         {

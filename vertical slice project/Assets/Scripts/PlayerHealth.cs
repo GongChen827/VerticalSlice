@@ -119,12 +119,18 @@ public class PlayerHealth : MonoBehaviour
         }
 
         UpdateHeartsUI();
-        TriggerHurtFlash();
 
         if (currentHealth <= 0)
         {
             Die();
             return;
+        }
+
+        TriggerHurtFlash();
+
+        if (GameAudioManager.Instance != null)
+        {
+            GameAudioManager.Instance.PlayPlayerHurtSFX();
         }
 
         StartCoroutine(DamageCooldown());
@@ -178,6 +184,11 @@ public class PlayerHealth : MonoBehaviour
         isDead = true;
         canTakeDamage = false;
 
+        if (GameAudioManager.Instance != null)
+        {
+            GameAudioManager.Instance.PlayPlayerDeathSFX();
+        }
+
         StartCoroutine(DeathRoutine());
     }
 
@@ -191,7 +202,6 @@ public class PlayerHealth : MonoBehaviour
         if (playerAnimator != null)
         {
             playerAnimator.speed = 1f;
-
             playerAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
 
             playerAnimator.SetBool(isDeadBoolName, true);
@@ -199,7 +209,6 @@ public class PlayerHealth : MonoBehaviour
             playerAnimator.ResetTrigger(dieTriggerName);
             playerAnimator.SetTrigger(dieTriggerName);
         }
-
 
         if (rb != null)
         {

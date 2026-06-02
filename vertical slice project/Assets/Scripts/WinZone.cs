@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,7 +11,11 @@ public class WinZone : MonoBehaviour
     [Header("Player Settings")]
     [SerializeField] private bool stopPlayerOnWin = true;
 
+    [Header("Restart Settings")]
+    [SerializeField] private float restartDelayAfterClick = 0.2f;
+
     private bool hasWon = false;
+    private bool isRestarting = false;
 
     private void Start()
     {
@@ -26,7 +31,10 @@ public class WinZone : MonoBehaviour
     {
         if (hasWon) return;
 
-        bool isPlayer = other.CompareTag("Player") || other.GetComponent<PlayerHealth>() != null;
+        bool isPlayer =
+            other.CompareTag("Player") ||
+            other.GetComponent<PlayerHealth>() != null ||
+            other.GetComponentInParent<PlayerHealth>() != null;
 
         if (!isPlayer)
         {
@@ -39,6 +47,12 @@ public class WinZone : MonoBehaviour
     private void Win(GameObject player)
     {
         hasWon = true;
+
+        if (GameAudioManager.Instance != null)
+        {
+            GameAudioManager.Instance.PlayWinSFX();
+            GameAudioManager.Instance.StopMusic();
+        }
 
         if (winPanel != null)
         {
@@ -69,6 +83,22 @@ public class WinZone : MonoBehaviour
 
     public void RestartScene()
     {
+        if (isRestarting) return;
+
+        isRestarting = true;
+
+        if (GameAudioManager.Instance != null)
+        {
+            GameAudioManager.Instance.PlayUIClickSFX();
+        }
+
+        StartCoroutine(RestartSceneAfterDelay());
+    }
+
+    private IEnumerator RestartSceneAfterDelay()
+    {
+        yield return new WaitForSecondsRealtime(restartDelayAfterClick);
+
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }

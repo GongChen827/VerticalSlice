@@ -22,6 +22,11 @@ public class DarkBarrier : MonoBehaviour
 
         isOpened = true;
 
+        if (GameAudioManager.Instance != null)
+        {
+            GameAudioManager.Instance.PlayBarrierBreakSFX();
+        }
+
         if (messageUI != null)
         {
             messageUI.ShowMessage(openedMessage);

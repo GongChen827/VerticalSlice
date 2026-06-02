@@ -34,6 +34,11 @@ public class ExitController : MonoBehaviour
 
         isOpen = true;
 
+        if (GameAudioManager.Instance != null)
+        {
+            GameAudioManager.Instance.PlayExitOpenSFX();
+        }
+
         if (closedExit != null)
         {
             closedExit.SetActive(false);
